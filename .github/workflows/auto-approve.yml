@@ -1,7 +1,6 @@
 ---
 name: Auto approve PR
 on:
-  push:
   pull_request:
     types: [opened, reopened]
 jobs:
@@ -15,8 +14,6 @@ jobs:
           git config --global user.email "<>"
       - name: Auto approve PR
         run: |
-          echo $PR
-          echo $GITHUB_REF
           gh pr review --approve -b "You seem like a trust worthy individual. I'll just approve this for you, I'm sure it's fine. Right?" $PR
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
