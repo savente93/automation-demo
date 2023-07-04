@@ -1,7 +1,3 @@
 ---
 
 blank_issues_enabled: false
-contact_links:
-  - name: Ask a question
-    url: https://github.com/Deltares/hydromt/discussions
-    about: Ask questions and discuss with other community members

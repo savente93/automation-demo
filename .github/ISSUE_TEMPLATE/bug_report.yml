@@ -1,6 +1,6 @@
 ---
 name: Bug Report
-description: Report incorrect behavior in the HydroMT library
+description: Report incorrect behavior
 labels: [Bug, Needs refinement]
 
 body:
