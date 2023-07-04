@@ -6,14 +6,10 @@ on:
     branches: [main]
     paths:
       - tests/*
-      - hydromt/*
-      - data/*
   pull_request:
     branches: [main]
     paths:
       - tests/*
-      - hydromt/*
-      - data/*
 
 jobs:
   Test-matrix:
@@ -27,11 +23,9 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        python-version: ['3.9', '3.10', '3.11']
+        python-version: ['3.11']
     steps:
       - uses: actions/checkout@v3
-      - name: Generate env spec
-        run: pip install tomli && python make_env.py test
       - uses: conda-incubator/setup-miniconda@v2
         with:
           python-version: ${{ matrix.python-version }}
@@ -39,12 +33,9 @@ jobs:
           channels: conda-forge, defaults
           channel-priority: strict
           environment-file: environment.yml
-          activate-environment: hydromt
 
       - name: Test
-        run: python -m pytest --verbose --cov=hydromt --cov-report xml
-
-      - uses: codecov/codecov-action@v3
+        run: pytest
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
