@@ -1,6 +1,7 @@
 ---
 name: Auto approve PR
 on:
+  push:
   pull_request:
     types: [opened, reopened]
 jobs:
