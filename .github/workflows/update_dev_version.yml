@@ -27,9 +27,9 @@ jobs:
         run: |
           DEV_VERSION=$(cat __init__.py | awk '/__version__/{print $0}' | awk -F'dev' '{print $2}' | tr -d '\"')
           if [[ -z $DEV_VERSION ]]; then
-            echo "NEW_VERSION=.dev1"
+            echo "NEW_VERSION=.dev1" >> $GITHUB_ENV
           else
-            echo "NEW_VERSION=.dev$(( $DEV_VERSION + 1))"
+            echo "NEW_VERSION=.dev$(( $DEV_VERSION + 1))" >> $GITHUB_ENV
           fi
       - name: update version
         env:
