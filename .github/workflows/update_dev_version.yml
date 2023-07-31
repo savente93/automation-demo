@@ -39,5 +39,5 @@ jobs:
           sed -i "s/__version__\s*=\s*\"\([0-9]\+\.[0-9]\+\.[0-9]\+\).dev[0-9]\+\"/__version__ = \"\1$NEW_VERSION\"/" __init__.py
           git add __init__.py
           git commit -m "update version"
-          git push origin ${{ github.pull_request.head.ref}}
+          git push origin ${{ github.pull_request.head.ref }}
           gh pr comment ${{ github.pull_request.number }} -b "I've updated the version for you. Feel free to merge now!"
