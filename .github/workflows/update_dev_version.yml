@@ -32,12 +32,6 @@ jobs:
           else
             echo "NEW_VERSION=.dev$(( $DEV_VERSION + 1))" >> $GITHUB_ENV
           fi
-      - name: print debug info
-        uses: hmarr/debug-action@v2.1.0
-        env:
-          GH_TOKEN: ${{ github.token }}
-          BRANCH_NAME: ${{ github.event.pull_request.head.ref }}
-          PR_NUMBER: ${{ github.event.pull_request.number}}
       - name: update version
         env:
           GH_TOKEN: ${{ github.token }}
