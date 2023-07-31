@@ -15,6 +15,8 @@ jobs:
         shell: bash -l {0}
     runs-on: ubuntu-latest
     steps:
+      - name: print debug info
+        uses: hmarr/debug-action@v2.1.0
       - name: Checkout source
         uses: actions/checkout@v3
       - name: configure git
@@ -36,5 +38,5 @@ jobs:
           sed -i "s/__version__\s*=\s*\"\([0-9]\+\.[0-9]\+\.[0-9]\+\).dev[0-9]\+\"/__version__ = \"\1$NEW_VERSION\"/" __init__.py
           git add __init__.py
           git commit -m "update version"
-          git push origin ${{ github.pull_request.base.ref}}
+          git push origin ${{ github.pull_request.head.ref}}
           gh pr comment ${{ github.pull_request.number }} -b "I've updated the version for you. Feel free to merge now!"
