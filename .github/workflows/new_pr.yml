@@ -1,3 +1,4 @@
+---
 name: Open new PR
 on:
   workflow_dispatch:
@@ -22,7 +23,7 @@ jobs:
           git config user.name "GitHub Actions Bot"
           git config user.email "<>"
       - name: Open new PR
-        env: 
+        env:
           PR_NAME: ${{ inputs.pr_name }}
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -30,5 +31,5 @@ jobs:
           git checkout -b $PR_NAME
           git add $PR_NAME
           git commit -m "add $PR_NAME"
-          git push origin $PR_NAME 
-          gh pr create --base main --body "auto PR" --title $PR_NAME" 
+          git push origin $PR_NAME
+          gh pr create --base main --body "auto PR" --title $PR_NAME"
