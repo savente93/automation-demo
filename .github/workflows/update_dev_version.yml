@@ -38,6 +38,7 @@ jobs:
           PR_NUMBER: ${{ github.event.pull_request.number}}
         run: |
           git checkout -b $BRANCH_NAME
+          git pull
           sed -i "s/__version__\s*=\s*\"\([0-9]\+\.[0-9]\+\.[0-9]\+\).dev[0-9]\+\"/__version__ = \"\1$NEW_VERSION\"/" __init__.py
           git add __init__.py
           git commit -m "update version"
