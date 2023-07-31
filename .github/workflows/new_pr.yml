@@ -26,9 +26,10 @@ jobs:
           PR_NAME: ${{ inputs.pr_name }}
           GH_TOKEN: ${{ github.token }}
         run: |
+          set -eo pipefail
           touch $PR_NAME
           git checkout -b $PR_NAME
           git add $PR_NAME
           git commit -m "add $PR_NAME"
-          git push origin $PR_NAME
-          gh pr create --base main --body "auto PR" --title $PR_NAME"
+          git push origin $PR_NAME -f 
+          gh pr create --base main --body "auto PR" --title $PR_NAME
