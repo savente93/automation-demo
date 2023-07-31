@@ -1,0 +1,39 @@
+
+name: Update Version
+on:
+  pull_request_review:
+    types: [submitted]
+
+
+
+jobs:
+  update-version:
+    if: github.event.review.state == 'approved'
+    defaults:
+      run:
+        shell: bash -l {0}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+      - name: configure git
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
+      - name: Calculate new dev version
+        run: |
+          DEV_VERSION=$(cat __init__.py | awk '/__version__/{print $0}' | awk -F'dev' '{print $2}' | tr -d '\"')
+          if [[ -z $DEV_VERSION ]]; then
+            echo "NEW_VERSION=.dev1"
+          else
+            echo "NEW_VERSION=.dev$(( $DEV_VERSION + 1))"
+          fi
+      - name: update version
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          sed -i "s/__version__\s*=\s*\"\([0-9]\+\.[0-9]\+\.[0-9]\+\).dev[0-9]\+\"/__version__ = \"\1$NEW_VERSION\"/" __init__.py
+          git add __init__.py
+          git commit -m "update version"
+          git push origin ${{ github.pull_request.base.ref}}
+          gh pr comment ${{ github.pull_request.number }} -b "I've updated the version for you. Feel free to merge now!"

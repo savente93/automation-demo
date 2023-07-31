@@ -1,0 +1,34 @@
+name: Open new PR
+on:
+  workflow_dispatch:
+    inputs:
+      pr_name:
+        description: Name of the PR to be opened
+        required: true
+        type: string
+
+jobs:
+  update-version:
+    if: github.event.review.state == 'approved'
+    defaults:
+      run:
+        shell: bash -l {0}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+      - name: configure git
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
+      - name: Open new PR
+        env: 
+          PR_NAME: ${{ inputs.pr_name }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          touch $PR_NAME
+          git checkout -b $PR_NAME
+          git add $PR_NAME
+          git commit -m "add $PR_NAME"
+          git push origin $PR_NAME 
+          gh pr create --base main --body "auto PR" --title $PR_NAME" 
