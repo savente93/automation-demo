@@ -31,5 +31,5 @@ jobs:
           git checkout -b $PR_NAME
           git add $PR_NAME
           git commit -m "add $PR_NAME"
-          git push origin $PR_NAME -f 
+          git push origin $PR_NAME -f
           gh pr create --base main --body "auto PR" --title $PR_NAME

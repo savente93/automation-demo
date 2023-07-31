@@ -23,7 +23,7 @@ jobs:
         run: |
           git config user.name "GitHub Actions Bot"
           git config user.email "<>"
-          git checkout ${{ github.pull_requet.head.ref }}
+          gh pr checkout ${{ github.pull_request.number }}
       - name: Calculate new dev version
         run: |
           DEV_VERSION=$(cat __init__.py | awk '/__version__/{print $0}' | awk -F'dev' '{print $2}' | tr -d '\"')
