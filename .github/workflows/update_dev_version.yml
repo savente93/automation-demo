@@ -41,4 +41,4 @@ jobs:
           git checkout main
           git add __init__.py
           git commit -m "update version"
-          git push origin main
+          git push origin main -f 
