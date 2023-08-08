@@ -1,0 +1,44 @@
+---
+
+name: Update Version
+on:
+  workflow_dispatch:
+
+
+
+
+jobs:
+  update-version:
+    defaults:
+      run:
+        shell: bash -l {0}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+        with: 
+          repository: savente/automation-demo
+          GITHUB_TOKEN: ${{ secrets.HYDROMT_BOT_PAT }}
+      # - name: configure git
+      #   run: |
+      #     git config user.name "GitHub Actions Bot"
+      #     git config user.email "<>"
+      - name: Calculate new dev version
+        run: |
+          DEV_VERSION=$(cat __init__.py | awk '/__version__/{print $0}' | awk -F'dev' '{print $2}' | tr -d '\"')
+          if [[ -z $DEV_VERSION ]]; then
+            echo "NEW_VERSION=.dev1" >> $GITHUB_ENV
+          else
+            echo "NEW_VERSION=.dev$(( $DEV_VERSION + 1))" >> $GITHUB_ENV
+          fi
+      - name: update version
+        env:
+          repository: savente/automation-demo
+          GITHUB_TOKEN: ${{ secrets.HYDROMT_BOT_PAT }}
+          # token: ${{ secrets.HYDROMT_BOT_PAT }}
+        run: |
+          git checkout main
+          sed -i "s/__version__\s*=\s*\"\([0-9]\+\.[0-9]\+\.[0-9]\+\).dev[0-9]\+\"/__version__ = \"\1$NEW_VERSION\"/" __init__.py
+          git add __init__.py
+          git commit -m "update version"
+          git push origin main 
