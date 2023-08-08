@@ -14,17 +14,11 @@ jobs:
         shell: bash -l {0}
     runs-on: ubuntu-latest
     steps:
-      - name: Get Token
-        id: get_workflow_token
-        uses: peter-murray/workflow-application-token-action@v1
-        with:
-          application_id: ${{ secrets.APPLICATION_ID }}
-          application_private_key: ${{ secrets.APPLICATION_PRIVATE_KEY }}
       - name: Checkout source
         uses: actions/checkout@v3
         with: 
           repository: savente/automation-demo
-          token: ${{ steps.get_workflow_token.outputs.token }}
+          token: ${{ secrets.HYDROMT_BOT_PAT }}
       # - name: configure git
       #   run: |
       #     git config user.name "GitHub Actions Bot"
@@ -40,8 +34,7 @@ jobs:
       - name: update version
         env:
           repository: savente/automation-demo
-          token: ${{ steps.get_workflow_token.outputs.token }}
-          # token: ${{ secrets.HYDROMT_BOT_PAT }}
+          token: ${{ secrets.HYDROMT_BOT_PAT }}
         run: |
           git checkout main
           sed -i "s/__version__\s*=\s*\"\([0-9]\+\.[0-9]\+\.[0-9]\+\).dev[0-9]\+\"/__version__ = \"\1$NEW_VERSION\"/" __init__.py
