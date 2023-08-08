@@ -1,6 +1,6 @@
 ---
 
-name: Update Version
+name: Update Version Manual dispatch
 on:
   workflow_dispatch:
 
