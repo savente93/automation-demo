@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v3
         with: 
           repository: savente/automation-demo
-          GITHUB_TOKEN: ${{ secrets.HYDROMT_BOT_PAT }}
+          token: ${{ secrets.HYDROMT_BOT_PAT }}
       # - name: configure git
       #   run: |
       #     git config user.name "GitHub Actions Bot"
@@ -34,7 +34,7 @@ jobs:
       - name: update version
         env:
           repository: savente/automation-demo
-          GITHUB_TOKEN: ${{ secrets.HYDROMT_BOT_PAT }}
+          token: ${{ secrets.HYDROMT_BOT_PAT }}
           # token: ${{ secrets.HYDROMT_BOT_PAT }}
         run: |
           git checkout main
