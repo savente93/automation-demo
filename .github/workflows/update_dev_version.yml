@@ -24,6 +24,7 @@ jobs:
         with: 
           repository: savente/automation-demo
           token: ${{ secrets.HYDROMT_BOT_PAT }}
+          branch: main
       # - name: configure git
       #   run: |
       #     git config user.name "GitHub Actions Bot"
